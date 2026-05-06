@@ -15,11 +15,11 @@ Copy this file to <code style="color:#111827;background:#ddd6fe;padding:2px 4px;
 
 | Field | Value |
 |---|---|
-| Name | TODO |
-| Roll Number | TODO |
-| GitHub Repository URL | TODO |
-| Resource Group | `rg-sp26-TODO` |
-| Assigned Region | TODO: `uaenorth` or `ukwest` |
+| Name | Haya Farid|
+| Roll Number | 27100460 |
+| GitHub Repository URL | https://github.com/hayafarid/CS487-PA4 |
+| Resource Group | `rg-sp26-27100460` |
+| Assigned Region |  `ukwest` |
 
 ## Evidence Rules
 
@@ -34,27 +34,28 @@ Copy this file to <code style="color:#111827;background:#ddd6fe;padding:2px 4px;
 
 ### Evidence 1.1: Forked Repository
 
-TODO: Embed screenshot of your forked GitHub repository.
+![forked-repo](docs/forkedrepo.png)
 
-Description: TODO: Explain that this is your working fork and that it contains the PA4 starter structure.
+Description: TODO: This screenshot shows my forked GitHub repository containing the PA4 starter structure and my implementation progress.
 
 ### Evidence 1.2: App Service Overview
 
-TODO: Embed screenshot of the Web App overview page showing `webapp-<rollnum>` and Running status.
+![app-overview](docs/app-overview.png)
 
-Description: TODO: State the resource group, region, runtime, and public URL.
+Description:  The App Service `pa4-27100460` was deployed in the resource group `rg-sp26-27100460` in the `UK West` region. The application is hosted on Linux and exposed through the public URL:
+https://pa4-27100460.azurewebsites.net
 
 ### Evidence 1.3: Deployment Center / GitHub Actions
 
-TODO: Embed screenshot of Deployment Center or the successful GitHub Actions deployment.
+TODO: ![deployment](docs/deployment-center.png)
 
-Description: TODO: Explain how the Web App is connected to your GitHub fork.
+Description: The Azure App Service was connected to my GitHub fork repository `hayafarid/CS487-PA4`. The Deployment Center was configured to enable deployment from the GitHub repository so updates pushed to the repository could be deployed to Azure.
 
 ### Evidence 1.4: Live Web UI
 
-TODO: Embed screenshot of the TaskFlow page loaded in a browser.
+TODO: ![live-web](docs/live-app.png)
 
-Description: TODO: Explain that the App Service is serving the frontend successfully.
+Description: TODO: The TaskFlow frontend was successfully deployed and served through Azure App Service. The live webpage allows users to submit orders through the TaskFlow interface.
 
 ---
 
@@ -62,37 +63,39 @@ Description: TODO: Explain that the App Service is serving the frontend successf
 
 ### Evidence 2.1: ACR Overview
 
-TODO: Embed screenshot of `crpa4<rollnum>` overview.
+![ACR](docs/acr.png)
 
-Description: TODO: Identify the registry SKU and resource group.
+Description: The Azure Container Registry `pa427100460` was created in the resource group `rg-sp26-27100460` using the Basic SKU. The registry stores all Docker container images used in the TaskFlow pipeline.
 
 ### Evidence 2.2: Docker Builds
+![docker-build1](docs/docker1.png)
+![docker-build2](docs/docker2.png)
 
-TODO: Embed screenshot showing successful local builds for `validate-api`, `report-job`, and `func-app`.
-
-Description: TODO: Explain which folder produced each image.
+Description: Docker images for `validate-api`, `report-job`, and `func-app` were built locally using their respective folders inside the repository. Each image was prepared for deployment to Azure Container Registry.
 
 ### Evidence 2.3: ACR Repositories
 
-TODO: Embed screenshot or CLI output showing all three repositories in ACR.
+![acr-repo](docs/ACR-repo.png)
 
-Description: TODO: Confirm `validate-api:v1`, `report-job:v1`, and `func-app:v1` were pushed.
-
+Description: The container images `validate-api:v1`, `report-job:v1`, and `func-app:v1` were successfully pushed to Azure Container Registry and are visible in the repositories list.
 ---
 
 ## Task 3: Durable Function Implementation (12 points)
 
 ### Evidence 3.1: Completed Function Code
+[function_app.py](function-app/function_app.py)
 
-TODO: Link to your completed file: `[function_app.py](function-app/function_app.py)`.
+![Function Code 1](docs/func-code1.png)
+![Function Code 2](docs/func-code2.png)
 
-Description: TODO: Summarize how your orchestrator chains validation and report generation.
+Description: 
+Description: The Durable Functions implementation uses an orchestrator that first validates incoming orders through the validation activity and then triggers the report generation activity. The workflow returns either a rejection response or a completed response containing the generated report URL.
 
 ### Evidence 3.2: Local Function Handler Listing
 
 TODO: Embed screenshot of `func start` showing the HTTP starter, orchestrator, and activities.
 
-Description: TODO: Explain that the Durable Functions runtime discovered your handlers.
+Description: Azure Functions Core Tools installation on macOS was blocked by an outdated Xcode dependency, which prevented running `func start` locally. However, the Durable Functions handlers, orchestrator logic, and activities were fully implemented inside `function_app.py` and deployed through Azure Function App configuration.
 
 ---
 
@@ -100,22 +103,21 @@ Description: TODO: Explain that the Durable Functions runtime discovered your ha
 
 ### Evidence 4.1: Function App Container Configuration
 
-TODO: Embed screenshot showing the Function App uses your `func-app:v1` image from ACR.
+![Function App](docs/functionapp.png)
 
-Description: TODO: State the Function App name and image URI.
+Description: The Azure Function App `func-27100460` was successfully created and configured in the resource group `rg-sp26-27100460`. The Function App was prepared for deployment and integration with the Durable Functions workflow and Azure Container Registry images.
 
 ### Evidence 4.2: Orchestration Smoke Test
 
 TODO: Embed screenshot of the `curl` output that starts an orchestration and returns status URLs.
 
-Description: TODO: Explain what the returned `id` and `statusQueryGetUri` prove.
+Description: A full orchestration smoke test could not be completed because Azure Functions Core Tools installation on macOS failed due to Xcode dependency issues. However, the orchestration logic and Azure Function App infrastructure were configured successfully.
 
 ### Evidence 4.3: Expected Failed Status Before Downstream Wiring
 
 TODO: Embed screenshot of the status query JSON showing the expected failure before `VALIDATE_URL` is configured.
 
-Description: TODO: Explain why this failure is expected at this stage.
-
+Description: Downstream validation service wiring and orchestration testing were not fully completed. The Function App configuration, managed identity setup, and Durable Function implementation were completed, but local publishing limitations prevented full runtime verification.
 ---
 
 ## Task 5: AKS Validator (15 points)
